@@ -1,12 +1,26 @@
 ﻿// oop_1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
+#include <stdio.h>
+#include <stdlib.h>
 
-#include <iostream>
+typedef struct {
+	int num;                     //числитель
+	int denom;                   //знаменатель
+}fraction;
+fraction init(int a, int b) {
+	fraction numb;
+	numb.num = a;
+	numb.denom = b;
+	return numb;
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	fraction drob = init(1, 2);
+	printf("%d  %d", drob.denom, drob.num);
+	return 0;
 }
+
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
