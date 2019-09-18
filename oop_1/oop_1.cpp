@@ -2,33 +2,61 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct {
-	int num;                     //числитель
-	int denom;                   //знаменатель
-}fraction;
-fraction init(int a, int b) {
-	fraction numb;
-	numb.num = a;
-	numb.denom = b;
-	return numb;
+#include <locale.h>
+typedef struct fraction {
+	int num = 1;                     //числитель
+	int denom = 1;                   //знаменатель
+};
+void Init(fraction &fract, int a, int b) {                 //инициализация
+	fract.num = a;
+	fract.denom = b;
+	printf("\nДробь инициализированна.");
 }
+void Read(fraction &fract) {                //ввод с клавиатуры
+	printf("\nВведите числитель: ");
+	scanf_s("%d", &fract.num);
+	printf("\nВведите знаменатель: ");
+	scanf_s("%d", &fract.denom);
+}
+void Display(fraction fract) {             //вывод на экран
+	printf("\n   %d\n   - \n   %d\n", fract.num, fract.denom);
+}
+int nod(int a, int b) {                    //нахождение наименьшего общего кратного через нод
+	while (a != 0 && b != 0) {             //нахождение наибольшего общего делимого через алгоритм Евклида
+		if (a > b)
+			a = a % b;
+		else b = b % a;
+	}
+	return a + b;
+}
+fraction Add(fraction a, fraction b) {				 //сложение дробей без сокращения
+	fraction summ;
+	summ.denom = (a.denom == b.denom ? a.denom: a.denom * b.denom/nod(a.denom, b.denom));
+	summ.num = (a.num * b.denom + b.num * a.denom) /nod(a.denom, b.denom);
+	return summ;
+}
+float separator(fraction fract) {                      //метод выделения дробной части
+	float ost = fract.num > fract.denom ? fract.num % fract.denom : fract.num;
+	ost /= 1.0 * fract.denom;
+	return ost;
+}					                            
+
 
 int main()
 {
-	fraction drob = init(1, 2);
-	printf("%d  %d", drob.denom, drob.num);
-	return 0;
+	setlocale(LC_ALL, "rus");
+	fraction one, two, sum;
+	Init(one, 14, 7);
+	Display(one);
+	printf("\nВведите новую дробь!");
+	Read(two);
+	printf("\nВаша дробь:");
+	Display(two);
+	sum = Add(one, two);
+	printf("Их сумма:");
+	Display(sum);
+	printf("Давайте найдем ее дробную часть! Она равна ");
+	printf("%g", separator(sum));
+	
 }
 
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
