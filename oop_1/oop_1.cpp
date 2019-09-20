@@ -3,23 +3,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-typedef struct fraction {
+#include <iostream>
+class Fraction {
+public:
+	void Init(int a, int b);
+	void Read();
+	void Display();
+	float Separator();
+    Fraction Add(Fraction b);
+private:
 	int num = 1;                     //числитель
 	int denom = 1;                   //знаменатель
 };
-void Init(fraction &fract, int a, int b) {                 //инициализация
-	fract.num = a;
-	fract.denom = b;
+void Fraction::Init(int a, int b) {                 //инициализация
+	this->num = a;
+	this->denom = b;
 	printf("\nДробь инициализированна.");
 }
-void Read(fraction &fract) {                //ввод с клавиатуры
+void Fraction::Read() {                //ввод с клавиатуры
 	printf("\nВведите числитель: ");
-	scanf_s("%d", &fract.num);
+	std::cin >> this->num;
 	printf("\nВведите знаменатель: ");
-	scanf_s("%d", &fract.denom);
+	std::cin >> this->denom;
 }
-void Display(fraction fract) {             //вывод на экран
-	printf("\n   %d\n   - \n   %d\n", fract.num, fract.denom);
+void Fraction::Display() {             //вывод на экран
+	printf("\n   %d\n   - \n   %d\n", this->num, this->denom);
 }
 int nod(int a, int b) {                    //нахождение наименьшего общего кратного через нод
 	while (a != 0 && b != 0) {             //нахождение наибольшего общего делимого через алгоритм Евклида
@@ -29,15 +37,15 @@ int nod(int a, int b) {                    //нахождение наимень
 	}
 	return a + b;
 }
-fraction Add(fraction a, fraction b) {				 //сложение дробей без сокращения
-	fraction summ;
-	summ.denom = (a.denom == b.denom ? a.denom: a.denom * b.denom/nod(a.denom, b.denom));
-	summ.num = (a.num * b.denom + b.num * a.denom) /nod(a.denom, b.denom);
+Fraction Fraction::Add(Fraction b) {				 //сложение дробей без сокращения
+	Fraction summ;
+	summ.denom = (this->denom == b.denom ? this->denom: this->denom * b.denom/nod(this->denom, b.denom));
+	summ.num = (this->num * b.denom + b.num * this->denom) /nod(denom, b.denom);
 	return summ;
 }
-float separator(fraction fract) {                      //метод выделения дробной части
-	float ost = fract.num > fract.denom ? fract.num % fract.denom : fract.num;
-	ost /= 1.0 * fract.denom;
+float Fraction::Separator() {                      //метод выделения дробной части
+	float ost = num > denom ? num % denom : num;
+	ost /= 1.0 * denom;
 	return ost;
 }					                            
 
@@ -45,18 +53,18 @@ float separator(fraction fract) {                      //метод выделе
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	fraction one, two, sum;
-	Init(one, 14, 7);
-	Display(one);
+	Fraction one, two, sum;
+	one.Init(14, 7);
+	one.Display();
 	printf("\nВведите новую дробь!");
-	Read(two);
+	two.Read();
 	printf("\nВаша дробь:");
-	Display(two);
-	sum = Add(one, two);
+	two.Display();
+	sum = one.Add(two);
 	printf("Их сумма:");
-	Display(sum);
+	sum.Display();
 	printf("Давайте найдем ее дробную часть! Она равна ");
-	printf("%g", separator(sum));
+	printf("%g", sum.Separator());
 	
 }
 
