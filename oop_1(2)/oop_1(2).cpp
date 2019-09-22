@@ -26,12 +26,18 @@ void Init(apples &appl, int a, int b, float infection) {                 //ин�
 	printf("\nФрукты инициализированы.");
 }
 void Read(apples &appl) {                //ввод с клавиатуры
-	printf("\nВведите количество яблок: ");
-	scanf_s("%d", &appl.count);
-	printf("\nВведите вес яблок: ");
-	scanf_s("%d", &appl.weight);
-	printf("\nВведите зараженность яблок в процентах: ");
-	scanf_s("%f", &appl.infect);
+	do {
+		printf("\nВведите количество яблок: ");
+		scanf_s("%d", &appl.count);
+	} while (appl.count < 0);
+	do {
+		printf("\nВведите вес яблок: ");
+		scanf_s("%d", &appl.weight);
+	} while (appl.weight < 0);
+	do{
+		printf("\nВведите зараженность яблок в процентах: ");
+		scanf_s("%f", &appl.infect);
+	} while (appl.infect < 0 || appl.infect > 100);
 }
 void Display(apples appl) {             //вывод на экран
 	if (appl.count < 1) {
@@ -68,7 +74,7 @@ void Display(apples appl) {             //вывод на экран
 		cout << "|          |" << endl;
 		space(appl.count);
 		cout << " __________\n";
-		cout << endl << "Средняя зараженность яблок:  " << appl.infect << endl;
+		cout << endl << "Средняя зараженность яблок:  " << appl.infect << " %" <<  endl;
 	}
 	else {
 		cout << "\n    ___________    \n";
@@ -94,7 +100,7 @@ void Display(apples appl) {             //вывод на экран
 		cout << "|\n";
 		cout << " \\                |\n";
 		cout << "  \\______________/\n";
-		cout << endl << "Средняя зараженность яблок:  " << appl.infect << endl;
+		cout << endl << "Средняя зараженность яблок:  " << appl.infect << " %" << endl;
 		cout << "\n";
 	}
 }
@@ -123,7 +129,7 @@ int main()
 	printf("\nВаша порция:");
 	Display(two);
 	sum = Add(one, two);
-	printf("Их сумма:");
+	printf("\nИх сумма:");
 	Display(sum);
-	printf("Давайте найдем средний вес яблока! Он равен %g кг", middle_w(sum));
+	printf("\nДавайте найдем средний вес яблока! Он равен %g кг", middle_w(sum));
 }
