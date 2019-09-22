@@ -8,67 +8,79 @@
 #define SIZE 20
 using namespace std;
  void space(int lenght) {
-	char spaces[SIZE];
 	int i;
 	for (i = 0; i < lenght - 1; i++)
 		cout << ' ' ;
 		
 }
-typedef struct apples {
+class Apples {
+public:
+	float Middle_w();
+	Apples Add(Apples a);
+	void Display();
+	void Init(int a, int b, float infection);
+	void Read();
+private:
 	int count = 0;                     //количество
 	int weight = 0;                    //вес
 	float infect = 0.0;
 };
-void Init(apples &appl, int a, int b, float infection) {                 //инициализация
-	appl.count = a;
-	appl.weight = b;
-	appl.infect = infection;
+void Apples::Init(int a, int b, float infection) {                 //инициализация
+	count = a;
+	weight = b;
+	infect = infection;
 	printf("\nФрукты инициализированы.");
 }
-void Read(apples &appl) {                //ввод с клавиатуры
-	printf("\nВведите количество яблок: ");
-	scanf_s("%d", &appl.count);
-	printf("\nВведите вес яблок: ");
-	scanf_s("%d", &appl.weight);
-	printf("\nВведите зараженность яблок в процентах: ");
-	scanf_s("%f", &appl.infect);
+void Apples::Read() {                //ввод с клавиатуры
+	do {
+		printf("\nВведите количество яблок: ");
+		scanf_s("%d", &count);
+	} while (count < 0);
+	do {
+		printf("\nВведите вес яблок: ");
+		scanf_s("%d", &weight);
+	} while (weight < 0);
+	do {
+		printf("\nВведите зараженность яблок в процентах: ");
+		scanf_s("%f", &infect);
+	} while (infect < 0 || infect > 100);
 }
-void Display(apples appl) {             //вывод на экран
-	if (appl.count < 1) {
+void Apples::Display() {             //вывод на экран
+	if (count < 1) {
 		cout << "Яблок нет(((";
-		appl.weight = 0;
-		appl.infect = 0;
+		weight = 0;
+		infect = 0;
 	}
-	else if(appl.count < 20) 
+	else if(count < 20) 
 	{
 		printf("\n\\");
-		for (int i = appl.count; i > 0; i--)
+		for (int i = count; i > 0; i--)
 			//printf("Ѽ");
 			printf("() ");
 		printf("/\n ");
-		for (int i = 0; i < appl.count; i++)
+		for (int i = 0; i < count; i++)
 			cout << "___";
 		cout << endl;
-		space(appl.count * 1.6);
+		space(count * 1.6);
 
 		cout << "| |";
 
 		cout << endl;
-		space(appl.count);
+		space(count);
 		cout << "  ________" << endl;
-		space(appl.count);
+		space(count);
 		cout << "|          |" << endl;
-		space(appl.count);
+		space(count);
 		cout << "|";
 		cout.width(7);
 
 		cout.flags(ios_base::left);
-		cout << appl.weight << "kg |" << endl;
-		space(appl.count);
+		cout << weight << "kg |" << endl;
+		space(count);
 		cout << "|          |" << endl;
-		space(appl.count);
+		space(count);
 		cout << " __________\n";
-		cout << endl << "Средняя зараженность яблок:  " << appl.infect << endl;
+		cout << endl << "Средняя зараженность яблок:  " << infect << endl;
 	}
 	else {
 		cout << "\n    ___________    \n";
@@ -83,47 +95,47 @@ void Display(apples appl) {             //вывод на экран
 
 		cout.width(17);
 		cout.flags(ios_base::right);
-		cout  << appl.count;
+		cout  << count;
 		cout << "|\n";
 		cout << "|      яблок      |\n";
 		cout << "|  Их вес (в кг): |\n";
 		cout << "|";
 		cout.width(17);
 		cout.flags(ios_base::right);
-		cout << appl.weight;
+		cout << weight;
 		cout << "|\n";
 		cout << " \\                |\n";
 		cout << "  \\______________/\n";
-		cout << endl << "Средняя зараженность яблок:  " << appl.infect << endl;
+		cout << endl << "Средняя зараженность яблок:  " << infect << endl;
 		cout << "\n";
 	}
 }
 
-apples Add(apples a, apples b) {				
-	apples summ;
-	summ.weight = a.weight + b.weight;
-	summ.count = a.count + b.count;
-	summ.infect = (a.infect + b.infect) / 2;
+Apples Apples::Add(Apples a) {				
+	Apples summ;
+	summ.weight = a.weight + this->weight;
+	summ.count = a.count + this->count;
+	summ.infect = (a.infect + this->infect) / 2;
 	return summ;
 }
-float middle_w(apples appl) {                      //метод нахождения среднего веса яблок
+float Apples::Middle_w() {                      //метод нахождения среднего веса яблок
 
-	return 1.0 * appl.weight/ appl.count;
+	return 1.0 * weight/ count;
 }					                            
 
 
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	apples one, two, sum;
-	Init(one, 8, 65, 34);
-	Display(one);
+	Apples one, two, sum;
+	one.Init(8, 65, 34);
+	one.Display();
 	printf("\nВведите новую порцию яблок!");
-	Read(two);
+	two.Read();
 	printf("\nВаша порция:");
-	Display(two);
-	sum = Add(one, two);
+	two.Display();
+	sum = one.Add(two);
 	printf("Их сумма:");
-	Display(sum);
-	printf("Давайте найдем средний вес яблока! Он равен %g кг", middle_w(sum));
+	sum.Display();
+	printf("Давайте найдем средний вес яблока! Он равен %g кг", sum.Middle_w());
 }
