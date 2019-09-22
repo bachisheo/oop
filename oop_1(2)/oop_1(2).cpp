@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+
 #include <iostream>
 #define SIZE 20
 using namespace std;
@@ -110,6 +111,7 @@ apples Add(apples a, apples b) {
 	summ.weight = a.weight + b.weight;
 	summ.count = a.count + b.count;
 	summ.infect = (a.infect + b.infect) / 2;
+
 	return summ;
 }
 float middle_w(apples appl) {                      //метод нахождения среднего веса яблок
@@ -132,4 +134,5 @@ int main()
 	printf("\nИх сумма:");
 	Display(sum);
 	printf("\nДавайте найдем средний вес яблока! Он равен %g кг", middle_w(sum));
+
 }
