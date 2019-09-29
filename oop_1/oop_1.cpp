@@ -53,6 +53,7 @@ float Fraction::Separator() {                      //метод выделени
 int main()
 {
 	setlocale(LC_ALL, "rus");
+
 	Fraction one, two, sum;
 	one.Init(14, 7);
 	one.Display();
