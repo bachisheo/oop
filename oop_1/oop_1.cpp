@@ -53,19 +53,21 @@ float Fraction::Separator() {                      //метод выделени
 int main()
 {
 	setlocale(LC_ALL, "rus");
-
-	Fraction one, two, sum;
-	one.Init(14, 7);
-	one.Display();
+	int * n = new int;
+	*n = 3;
+	Fraction* fr_array = new Fraction[*n];
+	fr_array[0].Init(14, 7);
+	fr_array[0].Display();
 	printf("\nВведите новую дробь!");
-	two.Read();
+	fr_array[1].Read();
 	printf("\nВаша дробь:");
-	two.Display();
-	sum = one.Add(two);
+	fr_array[1].Display();
+	fr_array[2] = fr_array[0].Add(fr_array[1]);
 	printf("Их сумма:");
-	sum.Display();
+	fr_array[2].Display();
 	printf("Давайте найдем ее дробную часть! Она равна ");
-	printf("%g", sum.Separator());
-	
+	printf("%g", fr_array[2].Separator());
+	delete [] fr_array;
+	delete n;
 }
 
